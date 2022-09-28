@@ -15,3 +15,6 @@ build/
 out/
 !**/src/main/**/out/
 !**/src/test/**/out/
+
+### Credentials ###
+./run.sh
