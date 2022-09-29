@@ -3,22 +3,41 @@ package bot;
 
 import config.Config;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
-import org.telegram.telegrambots.meta.api.methods.groupadministration.GetChatMember;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
-import org.telegram.telegrambots.meta.api.objects.chatmember.ChatMember;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Bot extends TelegramLongPollingBot {
     private final String token;
     private final String name;
-    private final String kateChannelLink;
+    private final String linkAfterValidation;
+    private final String linkForSubscribe;
+    private final ReplyKeyboardMarkup mainMarkup;
 
     public Bot(String token) {
         this.token = token;
         this.name = Config.BOT_NAME;
-        this.kateChannelLink = Config.LINK_AFTER_VALIDATE;
+        this.linkAfterValidation = Config.LINK_AFTER_VALIDATE;
+        this.linkForSubscribe = Config.KATE_CHANNEL;
+
+        this.mainMarkup = new ReplyKeyboardMarkup();
+        this.mainMarkup.setResizeKeyboard(true);
+        List<KeyboardRow> rows = new ArrayList<>();
+        KeyboardRow mainRow = new KeyboardRow();
+        mainRow.add("check");
+        rows.add(mainRow);
+        this.mainMarkup.setKeyboard(rows);
     }
 
 
@@ -27,32 +46,28 @@ public class Bot extends TelegramLongPollingBot {
         SendMessage returnMessage = new SendMessage();
         Message message = update.getMessage();
         Long userId = message.getFrom().getId();
-        String text = "text";
+        String text = "Please, repeat command\n";
+        returnMessage.setReplyMarkup(this.mainMarkup);
 
         if (message.getText().equals("/start")) {
-            text = "Something text...\n";
+            text = "Please, subscribe: " + this.linkForSubscribe + "\n";
         } else if (message.getText().equals("check")) {
             try {
-                String json = "{\n" +
-                        "    \"ok\": true,\n" +
-                        "    \"result\": {\n" +
-                        "        \"status\": \"member\",\n" +
-                        "        \"user\": {\n" +
-                        "            \"id\": 123456,\n" +
-                        "            \"first_name\": \"FirstName\",\n" +
-                        "            \"last_name\": \"LastName\",\n" +
-                        "            \"username\": \"UserName\",\n" +
-                        "            \"language_code\": \"en\"\n" +
-                        "        }\n" +
-                        "    }\n" +
-                        "}";
-                ChatMember member = new GetChatMember(this.kateChannelLink, userId).deserializeResponse(json);
-                if (member.getStatus().equals("member")) {
-                    text = "Happy, you in the channel\n";
+                URL checkMemberUrl = new URL("https://api.telegram.org/bot" + this.getBotToken() + "/getChatMember?chat_id=" + this.linkForSubscribe + "&user_id=" + userId);
+                HttpURLConnection con = (HttpURLConnection) checkMemberUrl.openConnection();
+                con.setRequestMethod("GET");
+
+                BufferedReader responseMessage = new BufferedReader(
+                        new InputStreamReader(con.getInputStream())
+                );
+                String line = responseMessage.readLine();
+
+                if (line.contains("\"status\":\"member\"")) {
+                    text = "Happy, you in the channel\nurl: " + this.linkAfterValidation + "\n";
                 } else {
-                    text = "Unhappy\n Please, subscribe: @k_visual\n";
+                    text = "Unhappy\nPlease, subscribe: " + this.linkForSubscribe + "\n";
                 }
-            } catch (TelegramApiException e) {
+            } catch (IOException e) {
                 System.err.println("Something went wrong: " + e.getMessage());
                 e.printStackTrace();
             }
