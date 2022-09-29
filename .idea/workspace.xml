@@ -5,14 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f089bcb2-f164-4642-830d-7589a3cc3b25" name="Changes" comment="added Credentials.java">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.jar" beforeDir="false" afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.jar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradlew" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradlew.bat" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/config/Credentials.java" beforeDir="false" />
     </list>
@@ -83,7 +78,7 @@
       <command value="gradle build" />
     </option>
   </component>
-  <component name="RunManager" selected="Gradle.KateValidationTGBot [build]">
+  <component name="RunManager" selected="Gradle.KateValidationTGBot [run]">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <envs>
         <env name="BOT_TOKEN" value="'5681282407:AAGXSSunEbFZZxlj2NuOOaCrECwNFRqij-g'" />
@@ -94,8 +89,13 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="KateValidationTGBot [build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="KateValidationTGBot [run]" type="GradleRunConfiguration" factoryName="Gradle" nameIsGenerated="true">
       <ExternalSystemSettings>
+        <option name="env">
+          <map>
+            <entry key="BOT_TOKEN" value="5681282407:AAGXSSunEbFZZxlj2NuOOaCrECwNFRqij-g" />
+          </map>
+        </option>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="externalSystemIdString" value="GRADLE" />
@@ -105,72 +105,7 @@
         </option>
         <option name="taskNames">
           <list>
-            <option value="build" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <method v="2" />
-    </configuration>
-    <configuration name="KateValidationTGBot [tasks]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value="tasks" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <method v="2" />
-    </configuration>
-    <configuration name="KateValidationTGBot [wrapper --gradle-version 6.0.1]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value="wrapper" />
-            <option value="--gradle-version" />
-            <option value="6.0.1" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <method v="2" />
-    </configuration>
-    <configuration name="KateValidationTGBot [wrapper]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value="wrapper" />
+            <option value="run" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -182,18 +117,11 @@
     </configuration>
     <list>
       <item itemvalue="Application.Main" />
-      <item itemvalue="Gradle.KateValidationTGBot [build]" />
-      <item itemvalue="Gradle.KateValidationTGBot [tasks]" />
-      <item itemvalue="Gradle.KateValidationTGBot [wrapper --gradle-version 6.0.1]" />
-      <item itemvalue="Gradle.KateValidationTGBot [wrapper]" />
+      <item itemvalue="Gradle.KateValidationTGBot [run]" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="Application.Main" />
-        <item itemvalue="Gradle.KateValidationTGBot [build]" />
-        <item itemvalue="Gradle.KateValidationTGBot [wrapper]" />
-        <item itemvalue="Gradle.KateValidationTGBot [wrapper --gradle-version 6.0.1]" />
-        <item itemvalue="Gradle.KateValidationTGBot [tasks]" />
       </list>
     </recent_temporary>
   </component>
@@ -206,7 +134,10 @@
       <option name="presentableId" value="Default" />
       <updated>1664299118832</updated>
       <workItem from="1664299122146" duration="10361000" />
-      <workItem from="1664355742298" duration="946000" />
+      <workItem from="1664355742298" duration="2783000" />
+      <workItem from="1664366834315" duration="992000" />
+      <workItem from="1664372078392" duration="7206000" />
+      <workItem from="1664456721327" duration="1585000" />
     </task>
     <task id="LOCAL-00001" summary="initial commit">
       <created>1664300200719</created>
@@ -229,7 +160,21 @@
       <option name="project" value="LOCAL" />
       <updated>1664305847593</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="updated gradle files">
+      <created>1664357956177</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1664357956177</updated>
+    </task>
+    <task id="LOCAL-00005" summary="updated project settings">
+      <created>1664358027128</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1664358027128</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -240,6 +185,19 @@
     <MESSAGE value="added telegram api lib" />
     <MESSAGE value="added Credentials.java" />
     <MESSAGE value="added start point" />
-    <option name="LAST_COMMIT_MESSAGE" value="added start point" />
+    <MESSAGE value="updated gradle files" />
+    <MESSAGE value="updated project settings" />
+    <option name="LAST_COMMIT_MESSAGE" value="updated project settings" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/bot/Bot.java</url>
+          <line>26</line>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
