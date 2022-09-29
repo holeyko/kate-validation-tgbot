@@ -1,8 +1,17 @@
 import bot.Bot;
-import config.Credentials;
+
+import org.telegram.telegrambots.meta.TelegramBotsApi;
+import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
+import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
 
 public class Main {
     public static void main(String[] args) {
-        new Bot(Credentials.BOT_TOKEN).start();
+        try {
+            TelegramBotsApi botsApi = new TelegramBotsApi(DefaultBotSession.class);
+            botsApi.registerBot(new Bot(System.getenv("BOT_TOKEN")));
+        } catch (TelegramApiException e) {
+            System.err.println("Something went wrong: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 }

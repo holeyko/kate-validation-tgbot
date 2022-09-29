@@ -4,12 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f089bcb2-f164-4642-830d-7589a3cc3b25" name="Changes" comment="added Credentials.java">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.jar" beforeDir="false" afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
+    <list default="true" id="f089bcb2-f164-4642-830d-7589a3cc3b25" name="Changes" comment="made Main.java">
       <change beforePath="$PROJECT_DIR$/src/main/java/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/config/Credentials.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -137,7 +133,7 @@
       <workItem from="1664355742298" duration="2783000" />
       <workItem from="1664366834315" duration="992000" />
       <workItem from="1664372078392" duration="7206000" />
-      <workItem from="1664456721327" duration="1585000" />
+      <workItem from="1664456721327" duration="1802000" />
     </task>
     <task id="LOCAL-00001" summary="initial commit">
       <created>1664300200719</created>
@@ -174,7 +170,21 @@
       <option name="project" value="LOCAL" />
       <updated>1664358027128</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="updated IDEA settings">
+      <created>1664458447414</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1664458447414</updated>
+    </task>
+    <task id="LOCAL-00007" summary="removed Credentials.java">
+      <created>1664458494185</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1664458494185</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -187,7 +197,10 @@
     <MESSAGE value="added start point" />
     <MESSAGE value="updated gradle files" />
     <MESSAGE value="updated project settings" />
-    <option name="LAST_COMMIT_MESSAGE" value="updated project settings" />
+    <MESSAGE value="updated IDEA settings" />
+    <MESSAGE value="removed Credentials.java" />
+    <MESSAGE value="made Main.java" />
+    <option name="LAST_COMMIT_MESSAGE" value="made Main.java" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
