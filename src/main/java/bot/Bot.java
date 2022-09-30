@@ -43,17 +43,24 @@ public class Bot extends TelegramLongPollingBot {
 
     @Override
     public void onUpdateReceived(Update update) {
+        String startText = "Please, subscribe: " + this.linkForSubscribe + "\n";
+        String validationPassedText = "Happy, you in the channel\nurl: " + this.linkAfterValidation + "\n";
+        String validationFailedText = "Unhappy\nPlease, subscribe: " + this.linkForSubscribe + "\n";
+        String botFailedText = "Oops";
+
         SendMessage returnMessage = new SendMessage();
+        returnMessage.setReplyMarkup(this.mainMarkup);
         Message message = update.getMessage();
         Long userId = message.getFrom().getId();
         String text = "Please, repeat command\n";
-        returnMessage.setReplyMarkup(this.mainMarkup);
 
         if (message.getText().equals("/start")) {
-            text = "Please, subscribe: " + this.linkForSubscribe + "\n";
+            text = startText;
         } else if (message.getText().equals("check")) {
             try {
-                URL checkMemberUrl = new URL("https://api.telegram.org/bot" + this.getBotToken() + "/getChatMember?chat_id=" + this.linkForSubscribe + "&user_id=" + userId);
+                URL checkMemberUrl = new URL(
+                        "https://api.telegram.org/bot" + this.getBotToken() + "/getChatMember?chat_id=" + this.linkForSubscribe + "&user_id=" + userId
+                );
                 HttpURLConnection con = (HttpURLConnection) checkMemberUrl.openConnection();
                 con.setRequestMethod("GET");
 
@@ -63,16 +70,16 @@ public class Bot extends TelegramLongPollingBot {
                 String line = responseMessage.readLine();
 
                 if (line.contains("\"status\":\"member\"")) {
-                    text = "Happy, you in the channel\nurl: " + this.linkAfterValidation + "\n";
+                    text = validationPassedText;
                 } else {
-                    text = "Unhappy\nPlease, subscribe: " + this.linkForSubscribe + "\n";
+                    text = validationFailedText;
                 }
             } catch (IOException e) {
                 System.err.println("Something went wrong: " + e.getMessage());
                 e.printStackTrace();
             }
         } else {
-            text = "Oopss\n";
+            text = botFailedText;
         }
 
         returnMessage.setChatId(userId);
