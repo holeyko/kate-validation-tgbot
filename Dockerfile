@@ -14,7 +14,7 @@ COPY gradlew .
 COPY settings.gradle .
 
 # copy credencials
-#COPY run.sh .
+COPY run.sh .
 
 EXPOSE 8080
 
