@@ -4,10 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f089bcb2-f164-4642-830d-7589a3cc3b25" name="Changes" comment="added ReplyKeyboardMarkup">
+    <list default="true" id="f089bcb2-f164-4642-830d-7589a3cc3b25" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/bot/Bot.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bot/Bot.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/config/Config.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/config/Config.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -136,7 +136,7 @@
       <workItem from="1664366834315" duration="992000" />
       <workItem from="1664372078392" duration="7206000" />
       <workItem from="1664456721327" duration="3542000" />
-      <workItem from="1664460715666" duration="8353000" />
+      <workItem from="1664460715666" duration="13562000" />
     </task>
     <task id="LOCAL-00001" summary="initial commit">
       <created>1664300200719</created>
@@ -208,7 +208,21 @@
       <option name="project" value="LOCAL" />
       <updated>1664458654392</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="added ReplyKeyboardMarkup">
+      <created>1664479495565</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1664479495565</updated>
+    </task>
+    <task id="LOCAL-00012" summary="added gredlew">
+      <created>1664479573590</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1664479573590</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -227,7 +241,8 @@
     <MESSAGE value="added bot logic" />
     <MESSAGE value="added Config.java" />
     <MESSAGE value="added ReplyKeyboardMarkup" />
-    <option name="LAST_COMMIT_MESSAGE" value="added ReplyKeyboardMarkup" />
+    <MESSAGE value="added gredlew" />
+    <option name="LAST_COMMIT_MESSAGE" value="added gredlew" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">
@@ -235,7 +250,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/bot/Bot.java</url>
-          <line>45</line>
+          <line>50</line>
           <option name="timeStamp" value="3" />
         </line-breakpoint>
       </breakpoints>
