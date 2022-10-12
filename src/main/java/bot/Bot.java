@@ -46,6 +46,11 @@ public class Bot extends TelegramLongPollingBot {
                         List.of(List.of(Buttons.CHECK_SUBSCRIBED.innerText)),
                         true);
 
+        File projectRoot = new File(System.getProperty("user.dir"));
+        InputFile inputFile = new InputFile(
+                new File(projectRoot, "/src/main/data/document.pdf")
+        );
+
         if (messageText.equals("/start")) {
             //nothing
         } else if (messageText.equals(Buttons.CHECK_SUBSCRIBED.innerText)) {
@@ -66,10 +71,6 @@ public class Bot extends TelegramLongPollingBot {
                     keyboardMarkup = null;
 
                     returnDocument = new SendDocument();
-                    File projectRoot = new File(System.getProperty("user.dir"));
-                    InputFile inputFile = new InputFile(
-                        new File(projectRoot, "/src/main/data/document.pdf")
-                    );
                     returnDocument.setDocument(inputFile);
                 } else {
                     returnText = BotTexts.FAILED_TEXT.text;

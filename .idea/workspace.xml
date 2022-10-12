@@ -5,12 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f089bcb2-f164-4642-830d-7589a3cc3b25" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/heroku.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/bot/Bot.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bot/Bot.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/config/Config.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/config/Config.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -78,11 +75,11 @@
       <command value="gradle :dependencies" />
       <command value="gradle tasks" />
       <command value="gradle wrapper --gradle-version 6.0.1" />
-      <command value="gradle wrapper" />
       <command value="gradle build" />
+      <command value="gradle wrapper" />
     </option>
   </component>
-  <component name="RunManager" selected="Gradle.KateValidationTGBot [run]">
+  <component name="RunManager" selected="Gradle.KateValidationTGBot [wrapper]">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <envs>
         <env name="BOT_TOKEN" value="'5681282407:AAGXSSunEbFZZxlj2NuOOaCrECwNFRqij-g'" />
@@ -119,12 +116,35 @@
       <DebugAllEnabled>false</DebugAllEnabled>
       <method v="2" />
     </configuration>
+    <configuration name="KateValidationTGBot [wrapper]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="wrapper" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
     <list>
       <item itemvalue="Application.Main" />
       <item itemvalue="Gradle.KateValidationTGBot [run]" />
+      <item itemvalue="Gradle.KateValidationTGBot [wrapper]" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.KateValidationTGBot [wrapper]" />
         <item itemvalue="Application.Main" />
       </list>
     </recent_temporary>
@@ -144,7 +164,8 @@
       <workItem from="1664456721327" duration="3542000" />
       <workItem from="1664460715666" duration="14529000" />
       <workItem from="1664520749835" duration="459000" />
-      <workItem from="1665587259537" duration="2312000" />
+      <workItem from="1665587259537" duration="2966000" />
+      <workItem from="1665590424023" duration="417000" />
     </task>
     <task id="LOCAL-00001" summary="initial commit">
       <created>1664300200719</created>
@@ -251,11 +272,29 @@
       <option name="project" value="LOCAL" />
       <updated>1664520787224</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="big improvement">
+      <created>1665589613625</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1665589613625</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="initial commit" />
@@ -274,7 +313,8 @@
     <MESSAGE value="added variables for text" />
     <MESSAGE value="added Dockerfile" />
     <MESSAGE value="fixed Dockerfile" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixed Dockerfile" />
+    <MESSAGE value="big improvement" />
+    <option name="LAST_COMMIT_MESSAGE" value="big improvement" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">
@@ -282,12 +322,12 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/bot/Bot.java</url>
-          <line>51</line>
+          <line>58</line>
           <option name="timeStamp" value="3" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/bot/Bot.java</url>
-          <line>62</line>
+          <line>69</line>
           <option name="timeStamp" value="4" />
         </line-breakpoint>
       </breakpoints>
