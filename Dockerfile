@@ -20,4 +20,4 @@ EXPOSE 8080
 
 # build and run project
 RUN microdnf install findutils
-ENTRYPOINT ./run.sh
+ENTRYPOINT chmod +x ./run.sh && ./run.sh
