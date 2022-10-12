@@ -11,6 +11,8 @@ repositories {
     mavenCentral()
 }
 
+compileJava.options.encoding('UTF-8')
+
 dependencies {
     implementation 'org.telegram:telegrambots:6.1.0'
 }
