@@ -25,6 +25,7 @@ public class Bot extends TelegramLongPollingBot {
     private final String token;
     private final String name;
     private final String linkForSubscribe;
+    private final static String documentName = "50 идей осенних фото.pdf";
 
     public Bot(String token) {
         this.token = token;
@@ -47,8 +48,9 @@ public class Bot extends TelegramLongPollingBot {
                         true);
 
         File projectRoot = new File(System.getProperty("user.dir"));
+	System.out.println(projectRoot.getPath());
         InputFile inputFile = new InputFile(
-                new File(projectRoot, "/src/main/data/document.pdf")
+                new File(projectRoot, "/src/main/data/" + documentName)
         );
 
         if (messageText.equals("/start")) {
