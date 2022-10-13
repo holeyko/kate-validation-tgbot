@@ -1,3 +1,3 @@
 # Getting Started
 
-Just send [bot](https://t.me/lexilize_add_words_bot) command */start*
+Just send [bot](https://t.me/k_visual_bot) command */start*
