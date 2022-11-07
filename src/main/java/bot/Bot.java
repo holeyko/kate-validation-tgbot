@@ -25,7 +25,7 @@ public class Bot extends TelegramLongPollingBot {
     private final String token;
     private final String name;
     private final String linkForSubscribe;
-    private final static String documentName = "50 идей осенних фото.pdf";
+    private final static String documentName = "50 идей зимних фото.pdf";
 
     public Bot(String token) {
         this.token = token;
