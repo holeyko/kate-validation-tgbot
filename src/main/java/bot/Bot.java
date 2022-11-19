@@ -2,119 +2,96 @@ package bot;
 
 
 import config.Config;
+import handler.UpdateHandler;
+import handler.exception.HandleException;
+import handler.impl.*;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendDocument;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
-import org.telegram.telegrambots.meta.api.objects.InputFile;
-import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
-import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
+import service.InlineButtonBuilder;
+import service.InlineKeyboardMarkupBuilder;
+import service.ReplyKeyboardMarkupBuilder;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 
 public class Bot extends TelegramLongPollingBot {
+    public static class ExecutionService {
+        private final TelegramLongPollingBot bot;
+
+        private ExecutionService(TelegramLongPollingBot bot) {
+            this.bot = bot;
+        }
+
+        public void executeMessage(SendMessage sendMessage) throws TelegramApiException {
+            bot.execute(sendMessage);
+        }
+
+        public void executeMessage(SendMessage sendMessage, String parseMode) throws TelegramApiException {
+            sendMessage.setParseMode(parseMode);
+            bot.execute(sendMessage);
+        }
+
+        public void executeDocument(SendDocument sendDocument) throws TelegramApiException {
+            bot.execute(sendDocument);
+        }
+    }
+
     private final String token;
     private final String name;
-    private final String linkForSubscribe;
-    private final static String documentName = "50 идей зимних фото.pdf";
+    private final ExecutionService executionService;
 
     public Bot(String token) {
         this.token = token;
         this.name = Config.BOT_NAME;
-        this.linkForSubscribe = Config.KATE_CHANNEL;
+        this.executionService = new ExecutionService(this);
     }
 
 
     @Override
     public void onUpdateReceived(Update update) {
-        Message message = update.getMessage();
-        Long chatId = message.getFrom().getId();
-        String messageText = message.getText();
-
-        SendMessage returnMessage = new SendMessage();
-        SendDocument returnDocument = null;
-        String returnText = BotTexts.START_TEXT.text;
-        ReplyKeyboardMarkup keyboardMarkup = createReplyKeyboardMarkup(
-                        List.of(List.of(Buttons.CHECK_SUBSCRIBED.innerText)),
-                        true);
-
-        File projectRoot = new File(System.getProperty("user.dir"));
-	System.out.println(projectRoot.getPath());
-        InputFile inputFile = new InputFile(
-                new File(projectRoot, "/src/main/data/" + documentName)
-        );
-
-        if (messageText.equals("/start")) {
-            //nothing
-        } else if (messageText.equals(Buttons.CHECK_SUBSCRIBED.innerText)) {
-            try {
-                URL checkMemberUrl = new URL(
-                        "https://api.telegram.org/bot" + this.getBotToken() + "/getChatMember?chat_id=" + this.linkForSubscribe + "&user_id=" + chatId
-                );
-                HttpURLConnection con = (HttpURLConnection) checkMemberUrl.openConnection();
-                con.setRequestMethod("GET");
-
-                BufferedReader responseMessage = new BufferedReader(
-                        new InputStreamReader(con.getInputStream())
-                );
-                String line = responseMessage.readLine();
-
-                if (line.contains("\"status\":\"member\"")) {
-                    returnText = BotTexts.PASSED_TEXT.text;
-                    keyboardMarkup = null;
-
-                    returnDocument = new SendDocument();
-                    returnDocument.setDocument(inputFile);
-                } else {
-                    returnText = BotTexts.FAILED_TEXT.text;
-                }
-            } catch (IOException e) {
-                System.err.println(e);
-                returnText = BotTexts.FAILED_TEXT.text;
-            }
+        if (update == null || !update.hasMessage()) {
+            System.err.println("Handle hasn't message");
         } else {
-            returnText = BotTexts.DO_NOT_UNDERSTAND.text;
-        }
+            UpdateHandler handler;
+            String messageText = update.getMessage().getText();
 
-        returnMessage.setChatId(chatId);
-        returnMessage.setText(returnText);
-        returnMessage.setParseMode("HTML");
-        returnMessage.setReplyMarkup(keyboardMarkup);
-
-        try {
-            execute(returnMessage);
-            if (returnDocument != null) {
-                returnDocument.setChatId(chatId);
-                execute(returnDocument);
+            if (messageText.equals("/start") || messageText.equals("/help")) {
+                handler = new StartHandler(executionService);
+            } else if (messageText.equals(Buttons.CHECK_SUBSCRIBED.getText())) {
+                handler = new CheckSubscribeHandler(executionService);
+                handler.setData("botToken", token);
+            } else if (messageText.equals(Buttons.LESSONS.getText())) {
+                handler = new LessonsHandler(executionService);
+            } else if (messageText.equals(Buttons.FILE.getText())) {
+                handler = new SendFileHandler(executionService);
+                handler.setData("fileName", "50 идей зимних фото.pdf");
+                handler.setData("fileText", TEXT.WINTER_DOCUMENT.getText());
+            } else {
+                handler = new ErrorHandler(executionService);
+                handler.setData("errorText", TEXT.FAILED.getText());
             }
-        } catch (TelegramApiException e) {
-            System.err.println("Something went wrong: " + e.getMessage());
-        }
-    }
 
+            try {
+                handler.handleUpdate(update);
+            } catch (HandleException e) {
+                handler = new ErrorHandler(executionService);
+                handler.setData("errorText", TEXT.FAILED.getText());
 
-    private ReplyKeyboardMarkup createReplyKeyboardMarkup(List<List<String>> rowsWithButtonNames, boolean isResize) {
-        List<KeyboardRow> rows = new ArrayList<>();
-        for (List<String> buttonNames : rowsWithButtonNames) {
-            KeyboardRow row = new KeyboardRow();
-            for (String buttonName : buttonNames) {
-                row.add(buttonName);
+                try {
+                    handler.handleUpdate(update);
+                } catch (TelegramApiException ex) {
+                    System.err.println(e.getMessage());
+                    e.printStackTrace();
+                }
+            } catch (TelegramApiException e) {
+                System.err.println(e.getMessage());
+                e.printStackTrace();
             }
-            rows.add(row);
         }
-
-        ReplyKeyboardMarkup keyboardMarkup = new ReplyKeyboardMarkup(rows);
-        keyboardMarkup.setResizeKeyboard(isResize);
-        return keyboardMarkup;
     }
 
     @Override
@@ -127,47 +104,113 @@ public class Bot extends TelegramLongPollingBot {
         return this.name;
     }
 
-    private enum Buttons {
-        CHECK_SUBSCRIBED("Я подписан(а)");
+    public enum Buttons {
+        CHECK_SUBSCRIBED("Я подписан(а)"),
+        FILE("Файл"),
+        LESSONS("Уроки");
 
-        private final String innerText;
+        private final String text;
 
-        Buttons(String innerText) {
-            this.innerText = innerText;
+        Buttons(String text) {
+            this.text = text;
+        }
+
+        public String getText() {
+            return text;
         }
     }
 
-    private enum BotTexts {
-        START_TEXT("""
-                    Приветик! Это бот-помощник @k_visual
+    public enum ReplyMarkups {
+        CHECK_SUBSCRIBE(new ReplyKeyboardMarkupBuilder()
+                .addRow(List.of(Buttons.CHECK_SUBSCRIBED.text))
+                .setResizable(true)
+                .build()
+        ),
+        TAKE(new ReplyKeyboardMarkupBuilder()
+                .addRow(List.of(Buttons.FILE.getText(), Buttons.LESSONS.getText()))
+                .setResizable(true)
+                .build()
+        );
 
-                   ❄️Чтобы получить файл
-                    «50 идей зимних фото»,
-                    подпишись на мой блог✔️
-                    
-                    <a href="https://t.me/k_visual">ПОДПИСАТЬСЯ</a>
-                    
-                    <b>Если подписка есть, жми сразу кнопку «Я подписан(а)»</b>
-                    """),
+        private final ReplyKeyboardMarkup keyboardMarkup;
 
-        PASSED_TEXT("""
-                    Отлично! Спасибо за подписку❤️ У меня в блоге ты найдёшь много интересного про контент и визуал!
+        ReplyMarkups(ReplyKeyboardMarkup keyboardMarkup) {
+            this.keyboardMarkup = keyboardMarkup;
+        }
 
-                    <b>Вот файл с идеями для фото! Надеюсь, что он будет полезен тебе :)</b>
-                    """),
+        public ReplyKeyboardMarkup getKeyboardMarkup() {
+            return keyboardMarkup;
+        }
+    }
 
-        FAILED_TEXT("""
-                    Ой..Что-то пошло не так🥲
+    public enum InlineMarkups {
+        LESSONS(new InlineKeyboardMarkupBuilder()
+                .addRow(List.of(new InlineButtonBuilder().setText("Урок 1").setUrl("https://youtu.be/98HQVFl_0cA").build()))
+                .addRow(List.of(new InlineButtonBuilder().setText("Урок 2").setUrl("https://youtu.be/YqPeYdkccA0").build()))
+                .addRow(List.of(new InlineButtonBuilder().setText("Урок 2").setUrl("https://youtu.be/-mFMWhvFyuM").build()))
+                .build());
+        private final InlineKeyboardMarkup keyboardMarkup;
 
-                    <b>Проверь подписку <a href="https://t.me/k_visual">на мой блог</a> еще раз и нажми на кнопку «Я подписан(а)»</b>
-                    """),
+        InlineMarkups(InlineKeyboardMarkup keyboardMarkup) {
+            this.keyboardMarkup = keyboardMarkup;
+        }
+
+        public InlineKeyboardMarkup getKeyboardMarkup() {
+            return keyboardMarkup;
+        }
+    }
+
+    public enum TEXT {
+        START("""
+                Приветик! Это бот-помощник @k_visual
+
+                🎁 Чтобы получить подарок,
+                подпишись на мой блог✔️
+                                 
+                <a href="https://t.me/k_visual">ПОДПИСАТЬСЯ</a>
+                                 
+                <b>Если подписка есть, жми сразу кнопку «Я подписан(а)»</b>
+                """),
+        PASSED_SUBSCRIBED("""
+                Отлично! Спасибо за подписку❤️ У меня в блоге ты найдёшь много интересного про контент и визуал!
+
+                <b>Нажимай на кнопку и забирай свой подарок! Надеюсь, будет полезно :)</b>
+                
+                По любым вопросам, пиши мне в личные сообщения: @k_vanova
+                """),
+        FAILED("""
+                Ой..Что-то пошло не так🥲
+
+                <b>Проверь подписку <a href="https://t.me/k_visual">на мой блог</a> еще раз и нажми на кнопку</b>
+                """),
+        WINTER_DOCUMENT("""
+                <b>Файл для самых красивых фотографий этой зимой❤️❄️</b>
+                
+                Обязательно делись, какие фото у тебя получатся: @k_vanova
+                """),
+        LESSONS("""
+                <b>Здесь собраны три урока для того, чтобы уже сейчас прокачать блог👌🏻</b>
+                
+                В уроках:
+                ✨ как вести блог регулярно
+                ✨ как найти свое позиционирование
+                ✨ как создать контент-план
+                ✨ файл по распаковке личности
+                ✨ мотивация
+                
+                <b>Открывай уроки и начинай создавать классный контент уже сейчас❤️</b>
+                """),
 
         DO_NOT_UNDERSTAND("Я вас не понимаю.\nНапишите /start.");
 
         private final String text;
 
-        BotTexts(String text) {
+        TEXT(String text) {
             this.text = text;
+        }
+
+        public String getText() {
+            return text;
         }
     }
 }
