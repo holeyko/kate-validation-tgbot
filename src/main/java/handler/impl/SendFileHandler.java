@@ -19,10 +19,6 @@ public class SendFileHandler extends AbstractUpdateHandler {
     }
 
     public void handleUpdateImpl(Update update) throws TelegramApiException {
-        if (!update.hasMessage()) {
-            throw new HandleException("Update hasn't message");
-        }
-
         String fileName = (String) data.getOrDefault("fileName", null);
         String fileText = (String) data.getOrDefault("fileText", null);
 

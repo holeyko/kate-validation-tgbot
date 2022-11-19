@@ -21,7 +21,7 @@ public abstract class AbstractUpdateHandler implements UpdateHandler {
         if (update == null) {
             throw new HandleException("Handle is null");
         } else if (!update.hasMessage()) {
-            throw new HandleException("Handle hasn't a message");
+            throw new HandleException("Handle hasn't an any message");
         }
 
         handleUpdateImpl(update);

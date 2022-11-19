@@ -19,6 +19,11 @@ public class ReplyKeyboardMarkupBuilder {
         return this;
     }
 
+    public ReplyKeyboardMarkupBuilder setOneTimeKeyboard(boolean oneTime) {
+        keyboardMarkup.setOneTimeKeyboard(oneTime);
+        return this;
+    }
+
     public ReplyKeyboardMarkupBuilder setResizable(boolean resizable) {
         keyboardMarkup.setResizeKeyboard(resizable);
         return this;

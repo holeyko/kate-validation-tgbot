@@ -19,6 +19,7 @@ public class StartHandler extends AbstractUpdateHandler {
         sendMessage.setChatId(chatId);
         sendMessage.setText(Bot.TEXT.START.getText());
         sendMessage.setReplyMarkup(Bot.ReplyMarkups.CHECK_SUBSCRIBE.getKeyboardMarkup());
+        sendMessage.disableWebPagePreview();
 
         executionService.executeMessage(sendMessage, "HTML");
     }
