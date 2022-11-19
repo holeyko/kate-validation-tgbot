@@ -16,6 +16,11 @@ import service.InlineButtonBuilder;
 import service.InlineKeyboardMarkupBuilder;
 import service.ReplyKeyboardMarkupBuilder;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.List;
 
 public class Bot extends TelegramLongPollingBot {
@@ -67,13 +72,28 @@ public class Bot extends TelegramLongPollingBot {
                 handler = new StartHandler(executionService);
             } else if (messageText.equals(Buttons.CHECK_SUBSCRIBED.getText())) {
                 handler = new CheckSubscribeHandler(executionService);
-                handler.setData("botToken", token);
-            }else if (messageText.equals(Buttons.LESSONS.getText())) {
-                handler = new LessonsHandler(executionService);
-            } else if (messageText.equals(Buttons.FILE.getText())) {
-                handler = new SendFileHandler(executionService);
-                handler.setData("fileName", "50 идей зимних фото.pdf");
-                handler.setData("fileText", TEXT.WINTER_DOCUMENT.getText());
+                boolean passed = false;
+                try {
+                    passed = chechSubscribe(update.getMessage().getChatId());
+                } catch (IOException ignored) {
+                    //No operations.
+                }
+
+                handler.setData("passed", passed);
+            } else {
+                try {
+                    if (chechSubscribe(update.getMessage().getChatId())) {
+                        if (messageText.equals(Buttons.LESSONS.getText())) {
+                            handler = new LessonsHandler(executionService);
+                        } else if (messageText.equals(Buttons.FILE.getText())) {
+                            handler = new SendFileHandler(executionService);
+                            handler.setData("fileName", "50 идей зимних фото.pdf");
+                            handler.setData("fileText", TEXT.WINTER_DOCUMENT.getText());
+                        }
+                    }
+                } catch (IOException ignored) {
+                    // No operation.
+                }
             }
         }
 
@@ -98,6 +118,23 @@ public class Bot extends TelegramLongPollingBot {
             System.err.println(e.getMessage());
             e.printStackTrace();
         }
+    }
+
+    public boolean chechSubscribe(Long chatId) throws IOException {
+        String url = "https://api.telegram.org/bot" + token + "/getChatMember?chat_id=" + Config.KATE_CHANNEL + "&user_id=" + chatId;
+        URL checkMemberUrl = new URL(url);
+        HttpURLConnection con = (HttpURLConnection) checkMemberUrl.openConnection();
+
+        con.setRequestMethod("GET");
+        BufferedReader responseMessage = new BufferedReader(
+                new InputStreamReader(con.getInputStream())
+        );
+        String line = responseMessage.readLine();
+
+        SendMessage sendMessage = new SendMessage();
+        sendMessage.setChatId(chatId);
+
+        return line.contains("\"status\":\"member\"");
     }
 
     @Override
