@@ -74,7 +74,7 @@ public class Bot extends TelegramLongPollingBot {
                 handler = new CheckSubscribeHandler(executionService);
                 boolean passed = false;
                 try {
-                    passed = chechSubscribe(update.getMessage().getChatId());
+                    passed = checkSubscribe(update.getMessage().getChatId());
                 } catch (IOException ignored) {
                     //No operations.
                 }
@@ -82,7 +82,7 @@ public class Bot extends TelegramLongPollingBot {
                 handler.setData("passed", passed);
             } else {
                 try {
-                    if (chechSubscribe(update.getMessage().getChatId())) {
+                    if (checkSubscribe(update.getMessage().getChatId())) {
                         if (messageText.equals(Buttons.LESSONS.getText())) {
                             handler = new LessonsHandler(executionService);
                         } else if (messageText.equals(Buttons.FILE.getText())) {
@@ -120,7 +120,7 @@ public class Bot extends TelegramLongPollingBot {
         }
     }
 
-    public boolean chechSubscribe(Long chatId) throws IOException {
+    public boolean checkSubscribe(Long chatId) throws IOException {
         String url = "https://api.telegram.org/bot" + token + "/getChatMember?chat_id=" + Config.KATE_CHANNEL + "&user_id=" + chatId;
         URL checkMemberUrl = new URL(url);
         HttpURLConnection con = (HttpURLConnection) checkMemberUrl.openConnection();
