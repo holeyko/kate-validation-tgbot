@@ -8,6 +8,7 @@ import handler.impl.*;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendDocument;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+import org.telegram.telegrambots.meta.api.methods.send.SendPhoto;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
@@ -42,6 +43,11 @@ public class Bot extends TelegramLongPollingBot {
 
         public void executeDocument(SendDocument sendDocument) throws TelegramApiException {
             bot.execute(sendDocument);
+        }
+
+        public void executePhoto(SendPhoto sendPhoto, String parseMode) throws TelegramApiException {
+            sendPhoto.setParseMode(parseMode);
+            bot.execute(sendPhoto);
         }
     }
 
@@ -85,10 +91,12 @@ public class Bot extends TelegramLongPollingBot {
                     if (checkSubscribe(update.getMessage().getChatId())) {
                         if (messageText.equals(Buttons.LESSONS.getText())) {
                             handler = new LessonsHandler(executionService);
+                            handler.setData("imageName", "lessons.png");
                         } else if (messageText.equals(Buttons.FILE.getText())) {
-                            handler = new SendFileHandler(executionService);
-                            handler.setData("fileName", "50 идей зимних фото.pdf");
+                            handler = new SendDocumentHandler(executionService);
                             handler.setData("fileText", TEXT.WINTER_DOCUMENT.getText());
+                            handler.setData("documentName", "50 идей зимних фото.pdf");
+                            handler.setData("imageName", "document.png");
                         }
                     }
                 } catch (IOException ignored) {
@@ -242,11 +250,23 @@ public class Bot extends TelegramLongPollingBot {
                 ✨ как создать контент-план
                 ✨ файл по распаковке личности
                 ✨ мотивация
-                                
-                <b>Открывай уроки и начинай создавать классный контент уже сейчас❤️</b>
-                """),
 
-        DO_NOT_UNDERSTAND("Я вас не понимаю.\nНапишите /start.");
+                <b>Открывай уроки и начинай создавать классный контент уже сейчас❤️</b>
+                
+                Пиши обратную связь, делись впечатлениями: @k_vanova
+                """),
+        INDIVIDUAL_CONSULTATION("""
+                <b>После просмотра обязательно делись впечатлениями❤️</b>
+                
+                Для обратной связи: @k_vanova
+                
+                <u>Всю информацию в уроках можно применить в блоге самостоятельно</u> и уже увидеть классный результат✨
+                
+                <b>Но если необходима работа с экспертом, можно записаться на индивидуальную консультацию,</b> где мы разберём ваше позиционирование, контент и составим стратегию работы над блогом❤️
+                
+                <b>По стоимости 7000₽</b>
+                <b>Записаться: @k_vanova</b>
+                """);
 
         private final String text;
 
